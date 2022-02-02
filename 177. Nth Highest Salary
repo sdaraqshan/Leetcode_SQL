@@ -1,0 +1,71 @@
+177. Nth Highest Salary
+
+Table: Employee
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| id          | int  |
+| salary      | int  |
++-------------+------+
+id is the primary key column for this table.
+Each row of this table contains information about the salary of an employee.
+ 
+
+Write an SQL query to report the nth highest salary from the Employee table. If there is no nth highest salary, the query should report null.
+
+The query result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Employee table:
++----+--------+
+| id | salary |
++----+--------+
+| 1  | 100    |
+| 2  | 200    |
+| 3  | 300    |
++----+--------+
+n = 2
+Output: 
++------------------------+
+| getNthHighestSalary(2) |
++------------------------+
+| 200                    |
++------------------------+
+Example 2:
+
+Input: 
+Employee table:
++----+--------+
+| id | salary |
++----+--------+
+| 1  | 100    |
++----+--------+
+n = 2
+Output: 
++------------------------+
+| getNthHighestSalary(2) |
++------------------------+
+| null                   |
++------------------------+
+
+*****************************************************
+SELECT * FROM tbl
+LIMIT offset, count;
+Let’s see what the offset and count mean in the LIMIT clause:
+
+The offset specifies the offset of the first row to return. The offset of the first row is 0, not 1.
+The count specifies maximum number of rows to return.
+
+*************************************************************************
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+    set N=N-1;
+  RETURN (
+      select distinct Salary from Employee order by Salary desc limit N,1
+  );
+END
